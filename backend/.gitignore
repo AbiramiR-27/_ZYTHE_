@@ -1,0 +1,6 @@
+.env
+node_modules/
+artifacts/
+cache/
+marketAddress.txt
+mockFeedAddress.txt
