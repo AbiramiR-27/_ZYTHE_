@@ -1,0 +1,6 @@
+{
+  "schedule": "*/30 * * * * *",
+  "contractAddress": "0xFD42BB131E6925487246f4AeeC02162220c0787F",
+  "chainSelectorName": "ethereum-testnet-sepolia",
+  "gasLimit": "500000"
+}

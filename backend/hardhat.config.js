@@ -1,5 +1,8 @@
-require("@nomicfoundation/hardhat-toolbox");
-require("dotenv").config();
+
+import "@nomicfoundation/hardhat-toolbox";
+import dotenv from "dotenv";
+dotenv.config();
+
 
 const sepoliaKey = process.env.PRIVATE_KEY?.trim();
 const validKey = /^0x[a-fA-F0-9]{64}$/.test(sepoliaKey || "");
@@ -8,7 +11,7 @@ if (sepoliaKey && !validKey) {
 }
 const sepoliaAccounts = validKey ? [sepoliaKey] : [];
 
-module.exports = {
+export default {
   solidity: "0.8.24",
   networks: {
     sepolia: {
