@@ -1,63 +1,28 @@
-<div style="text-align:center" align="center">
-    <a href="https://chain.link" target="_blank">
-        <img src="https://raw.githubusercontent.com/smartcontractkit/chainlink/develop/docs/logo-chainlink-blue.svg" width="225" alt="Chainlink logo">
-    </a>
+# Zythe CRE Workflow
 
-[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
-[![CRE Home](https://img.shields.io/static/v1?label=CRE&message=Home&color=blue)](https://chain.link/chainlink-runtime-environment)
-[![CRE Documentation](https://img.shields.io/static/v1?label=CRE&message=Docs&color=blue)](https://docs.chain.link/cre)
+This folder contains the Chainlink Runtime Environment (CRE) workflow for automated market resolution.
 
-</div>
+## Workflow Purpose
+- Automates resolution of prediction markets using Chainlink price feeds.
+- Runs on a schedule (cron) or EVM log trigger.
+- Written in TypeScript, compiled to WASM for CRE.
 
-# Custom Data Feed – CRE Template (TypeScript)
+## Files
+- `workflow.ts`: Main workflow logic.
+- `workflow.test.ts`: Unit tests for workflow.
+- `config.production.json`, `config.staging.json`: Workflow configuration files.
+- `workflow.yaml`: CRE workflow manifest.
 
-A template for bringing your own **custom off-chain data feed** on-chain with the **Chainlink Runtime Environment (CRE)** using **TypeScript** and **Bun**.
+## Usage
+- Simulate locally: `cre workflow simulate my-workflow --target staging-settings`
+- Deploy: `cre workflow deploy my-workflow --output ./my-workflow.wasm.br.b64`
 
----
+## Integration
+- Resolves markets on-chain using the ZythePredictionMarket contract.
+- Reads market data from contract and price feeds.
 
-**⚠️ DISCLAIMER**
-
-This template is an educational example to demonstrate how to interact with Chainlink systems, products, and services. It is provided **“AS IS”** and **“AS AVAILABLE”** without warranties of any kind, has **not** been audited, and may omit checks or error handling for clarity. **Do not use this code in production** without performing your own audits and applying best practices. Neither Chainlink Labs, the Chainlink Foundation, nor Chainlink node operators are responsible for unintended outputs generated due to errors in code.
-
----
-
-## Table of Contents
-
-* [What This Template Does](#what-this-template-does)
-* [Getting Started](#getting-started)
-  * [1. Update .env file](#1-update-env-file)
-  * [2. Install dependencies](#2-install-dependencies)
-  * [3. Configure RPC endpoints](#3-configure-rpc-endpoints)
-  * [4. Deploy contracts](#4-deploy-contracts)
-  * [5. Configure workflow](#5-configure-workflow)
-  * [6. Simulate the workflow](#6-simulate-the-workflow)
-* [Security Considerations](#security-considerations)
-* [License](#license)
-
----
-
-## What This Template Does
-
-This template provides an end-to-end starting point for bringing your own **custom data feed** on-chain with the **Chainlink Runtime Environment (CRE)**. It showcases local simulation and the core CRE workflow patterns.
-
-**Components:**
-- **Contracts** (Solidity) under `projectRoot/contracts/evm/src`  
-  Example demo contracts used by the workflow:
-  - `ReserveManager`
-  - `SimpleERC20`
-  - `BalanceReader`
-  - `MessageEmitter`
-- **CRE Workflow** (**TypeScript**) that fetches your off-chain data and optionally performs chain writes based on configurable triggers (cron or EVM log). The entry point is typically `main.ts`.
-
-**Key Technologies**
-- **CRE (Chainlink Runtime Environment)** – orchestrates workflows with DON consensus.
-- **TypeScript + Bun** – authoring and running the workflow locally.
-
----
-
-## Getting Started
-
-### 1. Update .env file
+## License
+MIT
 
 You need to add a private key to the `.env` file. This is specifically required if you want to simulate **chain writes** (the key must be valid and funded).  
 If your workflow does **not** write on-chain, you can keep a dummy key:

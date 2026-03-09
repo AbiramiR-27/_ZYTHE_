@@ -1,44 +1,44 @@
 # Zythe - Decentralized Prediction Market Platform
 
-A Web3-enabled prediction market platform built with Next.js 16, Wagmi, and World ID verification. Built for the Chainlink Hackathon.
+Zythe is a Web3-enabled prediction market platform built with Next.js 16, Wagmi, and World ID verification. It leverages Chainlink for oracle data feeds and CRE for automated market resolution.
 
-## 🎯 Overview
+## Overview
 
-Zythe enables users to make predictions on real-world events, stake ETH on outcomes, and earn rewards for accurate predictions. The platform uses Chainlink for oracle data feeds and World ID for human verification, ensuring integrity and Sybil-resistance.
+Zythe enables users to:
+- Make predictions on real-world events
+- Stake ETH on outcomes
+- Earn rewards for accurate predictions
+- Browse, create, and resolve markets
+- Verify humanity with World ID
 
-## ✨ Features
+## Features
 
-- **Wallet Connection**: RainbowKit integration for seamless Web3 wallet connectivity
-- **World ID Verification**: Proof-of-humanity verification to prevent Sybil attacks
-- **Market Browser**: Browse active prediction markets with filtering and sorting
-- **Make Predictions**: Stake ETH on market outcomes with real-time odds
-- **Portfolio Tracking**: View prediction history, win rate, and earnings
-- **Leaderboard**: Track top predictors and compete globally
-- **Chainlink Integration**: Oracle-powered market resolutions using Chainlink price feeds
-- **Dark/Light Mode**: Theme toggle for user preference
-- **Responsive Design**: Mobile-first approach with full device compatibility
+- **Wallet Connection**: RainbowKit + Wagmi for seamless wallet integration
+- **World ID Verification**: Proof-of-humanity for Sybil resistance
+- **Market Browser**: Filter, sort, and search active markets
+- **Prediction Interface**: Stake ETH, view odds, and submit predictions
+- **Portfolio Tracking**: View history, win rate, and earnings
+- **Leaderboard**: Compete globally with top predictors
+- **Chainlink Integration**: Oracle-powered market resolution
+- **CRE Workflow**: Automated market resolution via Chainlink Runtime Environment
+- **Dark/Light Mode**: Theme toggle
+- **Mobile Responsive**: Works on all devices
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Installation
 
 ```bash
-# Clone the repository
 git clone <repo-url>
 cd zythe
-
-# Install dependencies
 pnpm install
-
-# Start development server
 pnpm dev
 ```
-
-The app will be available at `http://localhost:3000`
+App runs at `http://localhost:3000`
 
 ### Environment Setup
 
-Create a `.env.local` file with:
+Create `.env.local`:
 
 ```env
 NEXT_PUBLIC_WAGMI_PROJECT_ID=your_rainbowkit_project_id
@@ -47,17 +47,56 @@ NEXT_PUBLIC_WORLD_ID_APP_ID=your_world_id_app_id
 NEXT_PUBLIC_WORLD_ID_ACTION_ID=your_world_id_action_id
 ```
 
-## 📱 Pages
+## Pages
 
-### Home (`/`)
-Landing page with hero section, features overview, and featured markets preview.
+- **Home** (`/`): Hero, features, featured markets
+- **Markets** (`/markets`): List, filter, sort, search, real-time odds
+- **Market Detail** (`/markets/[id]`): Full info, prediction UI, participants, oracle data
+- **Profile** (`/profile`): Wallet info, World ID status, stats, history, leaderboard
+- **Resolved** (`/resolved`): Completed markets, outcomes, leaderboard
 
-### Markets (`/markets`)
-Browse all active prediction markets with:
-- Real-time odds display
-- Category filtering
-- Search functionality
-- Multiple sorting options
+## Architecture
+
+### Tech Stack
+- Frontend: Next.js 16, React 19, TypeScript
+- Styling: Tailwind CSS 4, shadcn/ui
+- Web3: Wagmi, Viem, RainbowKit
+- Verification: World ID
+- Notifications: Sonner
+- State: React + Wagmi
+
+### Directory Structure
+```
+/app
+  ├── page.tsx (Home)
+  ├── /markets
+  │   ├── page.tsx (Markets list)
+  │   └── /[id]/page.tsx (Market detail)
+  ├── /profile/page.tsx (User profile)
+  └── /resolved/page.tsx (Resolved markets)
+
+/components
+  ├── /web3 (Wallet, World ID)
+  ├── /market (Prediction UI)
+  ├── /layout (Header, theme toggle)
+  └── /ui (shadcn/ui)
+
+/lib
+  ├── /web3 (ABIs, config, hooks)
+  ├── types.ts
+  └── utils.ts
+
+/hooks (Custom React hooks)
+```
+
+## Integration
+
+- **Smart Contracts**: See `/backend/contracts` and `/zythe/contracts` for Solidity sources.
+- **CRE Workflow**: `/zythe/my-workflow` automates market resolution.
+- **Frontend**: `/app` and `/components` for UI and contract interaction.
+
+## License
+MIT
 - Participant and volume stats
 
 ### Market Detail (`/markets/[id]`)
