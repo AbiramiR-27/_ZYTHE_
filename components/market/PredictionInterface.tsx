@@ -1,6 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useWriteContract, useAccount } from 'wagmi';
+import { CONTRACT_CONFIG } from '@/lib/web3/config';
+import { PREDICTION_MARKET_ABI } from '@/lib/web3/abi';
+import { useWorldID } from '@/hooks/useWorldID';
+import { WorldIDButton } from '@/components/web3/WorldIDButton';
 import { Market } from '@/lib/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -17,32 +22,49 @@ export function PredictionInterface({ market }: PredictionInterfaceProps) {
   const [amount, setAmount] = useState('0.01');
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const { verified, checkVerification } = useWorldID();
+  const { address } = useAccount();
+  const { writeContractAsync } = useWriteContract();
+
+  useEffect(() => {
+    checkVerification();
+  }, [checkVerification]);
 
   const handlePredict = async () => {
     if (!selectedPrediction) {
       toast.error('Please select YES or NO');
       return;
     }
-
     if (!amount || parseFloat(amount) <= 0) {
       toast.error('Please enter a valid amount');
       return;
     }
-
+    if (!verified) {
+      toast.error('World ID verification required');
+      return;
+    }
+    if (!address) {
+      toast.error('Connect your wallet');
+      return;
+    }
     setLoading(true);
     try {
-      // Simulate blockchain transaction
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      toast.success(`Predicted ${selectedPrediction.toUpperCase()} with ${amount} ETH`);
+      const tx = await writeContractAsync({
+        address: CONTRACT_CONFIG.address,
+        abi: PREDICTION_MARKET_ABI,
+        functionName: 'placePrediction',
+        args: [BigInt(market.id), selectedPrediction === 'yes'],
+        value: BigInt(Math.floor(parseFloat(amount) * 1e18)),
+      });
+      toast.success(`Transaction sent! Hash: ${tx}`);
       setSubmitted(true);
       setTimeout(() => {
         setSelectedPrediction(null);
         setAmount('0.01');
         setSubmitted(false);
       }, 3000);
-    } catch (error) {
-      toast.error('Failed to submit prediction');
+    } catch (error: any) {
+      toast.error(error?.message || 'Failed to submit prediction');
     } finally {
       setLoading(false);
     }
@@ -66,13 +88,16 @@ export function PredictionInterface({ market }: PredictionInterfaceProps) {
           </div>
         )}
 
-        {/* Warning */}
+        {/* Warning & World ID Button */}
         <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-start gap-3">
           <AlertCircle className="h-5 w-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
           <div className="flex-1">
             <p className="text-xs text-amber-600 dark:text-amber-400">
               World ID verification required to predict. Make sure you're verified before staking.
             </p>
+            <div className="mt-2">
+              <WorldIDButton />
+            </div>
           </div>
         </div>
 
