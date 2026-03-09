@@ -171,9 +171,6 @@ The platform includes hooks for contract interaction:
 - `useCreateMarketMutation()` - Create markets
 - `useChainlinkFeed()` - Read price feeds
 
-### Demo Mode
-The platform runs in demo mode with mock data and simulated transactions. No real ETH is transferred. This is perfect for testing without testnet tokens.
-
 ## 🌍 World ID Integration
 
 ### How It Works
@@ -197,24 +194,6 @@ The platform runs in demo mode with mock data and simulated transactions. No rea
 - LINK/USD: `0xc1e633Dc6213E63C5F3330466687e85A1BAeda4a`
 
 Markets can be tied to specific Chainlink feeds for oracle-powered resolution.
-
-## 🎨 Design System
-
-### Colors
-- **Primary**: Blue (#2563EB) - Main brand color
-- **Accent**: Orange (#F97316) - Secondary actions
-- **Background**: Dark theme with light mode support
-- **Border Radius**: 12px standard, 8px for smaller elements
-
-### Typography
-- **Font**: Geist (system default)
-- **Headings**: Bold, up to 6xl
-- **Body**: Regular, 14-16px
-
-### Responsive Breakpoints
-- Mobile: < 640px
-- Tablet: 640px - 1024px
-- Desktop: > 1024px
 
 ## 🧪 Testing
 
@@ -287,32 +266,11 @@ const { predict, loading } = usePredictMutation();
 await predict(marketId, 'yes', '0.01');
 ```
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see LICENSE file for details.
-
-## 🏆 Chainlink Hackathon
-
-Built for the Chainlink Hackathon with:
+## Built With
 - Chainlink Price Feeds for oracle data
 - World ID for human verification
 - Sepolia testnet support
 - Multi-chain ready architecture
-
-## 📞 Support
-
-For issues, questions, or suggestions:
-- Open a GitHub issue
-- Check existing documentation
-- Review the code comments for technical details
 
 ## 🎓 Learning Resources
 
@@ -323,5 +281,3 @@ For issues, questions, or suggestions:
 - [shadcn/ui Components](https://ui.shadcn.com)
 
 ---
-
-Built with 🚀 for the Chainlink Hackathon
